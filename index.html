@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>ECHO — Chat That Feels Instant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dots" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="floaters" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="nav">
+  <div class="container nav-in">
+    <a class="logo" href="#top"><span class="ping"></span>ECHO</a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#demo">Developers</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="#demo">Read the docs</a>
+      <a class="btn btn-primary" href="#pricing">Deploy free →</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="container split-hero">
+    <div>
+      <span class="badge"><span class="pulse"></span>V1.4 — PRESENCE + TYPING EVENTS</span>
+      <h1>Chat that feels<br><span class="grad">instant.</span></h1>
+      <p class="lede">Echo is self-hosted WebSocket chat infrastructure: presence, typing, receipts and history behind one socket. No polling. No third-party relay. Your servers, your messages.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary big" href="#pricing">Deploy free</a>
+        <a class="btn btn-ghost big" href="#demo">See the wire protocol ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><b class="num" data-target="12" data-suffix=" ms">0</b><span>median delivery</span></div>
+        <div class="hs"><b class="num" data-target="99.98" data-decimals="2" data-suffix="%">0</b><span>socket uptime</span></div>
+        <div class="hs"><b class="num" data-target="40" data-suffix="k">0</b><span>conns per node</span></div>
+      </div>
+      <p class="trusted">Trusted by teams at Kiteflight · Nordlys · Skyforge · Buboq · Prai Labs</p>
+    </div>
+
+    <div class="chatcard glass">
+      <div class="chat-head">
+        <span class="ava a1">M</span><span class="ava a2">B</span>
+        <div class="ch"><b>#team-echo</b><span class="pres"><i></i>3 online</span></div>
+        <em class="live">LIVE</em>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="msg in"><span class="who w-maya">Maya</span><div class="bub">pushed the websocket branch 🚀</div></div>
+        <div class="msg in"><span class="who w-ben">Ben</span><div class="bub">latency on staging?</div></div>
+        <div class="msg out"><div class="bub">12 ms median — feels local <i class="tick">✓✓</i></div></div>
+      </div>
+      <div class="typing" id="typing"><span class="who w-maya" id="typingWho">Maya</span><i></i><i></i><i></i></div>
+      <div class="chat-foot"><span>Message #team-echo</span><em>⏎</em></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+<section class="block" id="features">
+  <div class="container">
+    <div class="eyebrow">Features</div>
+    <h2>Everything a conversation needs,<br><span class="grad">nothing it doesn't.</span></h2>
+    <div class="feat-grid">
+      <div class="feat card"><span class="ico">⚡</span><h3>WebSocket-native</h3><p>One persistent socket per client. Zero polling, zero long-request hacks.</p></div>
+      <div class="feat card"><span class="ico">👀</span><h3>Presence & typing</h3><p>Who's online, who's typing — as first-class events, not add-ons.</p></div>
+      <div class="feat card"><span class="ico">✅</span><h3>Delivery receipts</h3><p>Sent, delivered, read. Ticks your users already understand.</p></div>
+      <div class="feat card"><span class="ico">🗄️</span><h3>History API</h3><p>Cursor-paginated REST for backfill when a socket reconnects.</p></div>
+      <div class="feat card"><span class="ico">🔐</span><h3>Optional E2E</h3><p>Per-room key exchange when even your servers shouldn't read along.</p></div>
+      <div class="feat card"><span class="ico">🧭</span><h3>Redis pub/sub scale</h3><p>Add nodes, share rooms. 40k connections each, horizontally.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="demo">
+  <div class="container split">
+    <div>
+      <div class="eyebrow">Developers</div>
+      <h2>Ten lines of client.<br><span class="grad">One socket forever.</span></h2>
+      <ul class="checks">
+        <li>Token auth on connect — sessions, not query-string secrets</li>
+        <li>Rooms as signed channel names, private by default</li>
+        <li>Automatic reconnect with exponential backoff + backfill</li>
+        <li>Works with Laravel Reverb, Ratchet, or any WS server you run</li>
+      </ul>
+    </div>
+    <div class="codecard card">
+      <div class="code-bar"><i></i><i></i><i></i><span>chat.js</span></div>
+      <pre><code><span class="k">const</span> ws = <span class="k">new</span> WebSocket(<span class="s">'wss://echo.yourapp.com/app'</span>);
+
+ws.onmessage = e =&gt; render(JSON.parse(e.data));
+
+sendBtn.onclick = () =&gt; ws.send(JSON.stringify({
+  room: <span class="s">'team-echo'</span>,
+  text: input.value
+}));
+
+<span class="c">// presence, typing, receipts: same socket, free.</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="container">
+    <blockquote>“We deleted 4,000 lines of polling code <span class="it">and a whole Redis workaround.</span> Echo was live in a weekend.”</blockquote>
+    <cite><b>Deniz A.</b> · CTO, Kiteflight</cite>
+  </div>
+</section>
+
+<section class="block" id="pricing">
+  <div class="container">
+    <div class="eyebrow">Pricing</div>
+    <h2>Start free. <span class="grad">Stay owner.</span></h2>
+    <div class="plan-grid">
+      <div class="plan card">
+        <h3>Hobby</h3><b>€0</b><span>self-hosted, forever</span>
+        <ul><li>1 node, 5k connections</li><li>Presence + typing + receipts</li><li>Community support</li></ul>
+        <a class="btn btn-ghost" href="#">Grab the binary</a>
+      </div>
+      <div class="plan card hot">
+        <em class="ptag">TEAM FAVOURITE</em>
+        <h3>Team</h3><b>€39</b><span>per month</span>
+        <ul><li>Unlimited nodes</li><li>History API + S3 backups</li><li>SSO & audit log</li></ul>
+        <a class="btn btn-primary" href="#">Start 14-day trial →</a>
+      </div>
+      <div class="plan card">
+        <h3>Scale</h3><b>Custom</b><span>annual</span>
+        <ul><li>Multi-region routing</li><li>E2E rooms + compliance</li><li>99.99% SLA, on-call</li></ul>
+        <a class="btn btn-ghost" href="#">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-card card">
+    <h2>Ship conversations, <span class="grad">not sockets.</span></h2>
+    <p>One binary, one port, one `echo up`. Your users feel the difference in milliseconds.</p>
+    <div class="hero-cta center">
+      <a class="btn btn-primary big" href="#pricing">Deploy free →</a>
+      <a class="btn btn-ghost big" href="#">Join the Discord</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot-in">
+    <span>© <span id="y">2026</span> Echo Systems — your servers, your messages</span>
+    <span class="legal"><a href="#">Status</a><a href="#">Docs</a><a href="#">Security</a><a href="#">Contact</a></span>
+  </div>
+</footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
